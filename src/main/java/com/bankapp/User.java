@@ -1,15 +1,17 @@
 package com.bankapp;
 
+import java.util.List;
+
 public class User {
     private int userID;
     private String foreName;
     private String surName;
     private int password;
     private String email;
-    private int phoneNumber;
-    private List<Account> account;
+    private String phoneNumber;
+    private List<Account> accounts;
 
-    public User(int userID, String foreName, String surName, int password, String email, int phoneNumber) {
+    public User(int userID, String foreName, String surName, int password, String email, String phoneNumber) {
         this.userID = userID;
         this.foreName = foreName;
         this.surName = surName;
@@ -58,19 +60,19 @@ public class User {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Account> getAccount() {
-        return account;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccount(List<Account> account) {
-        this.account = account;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 }
