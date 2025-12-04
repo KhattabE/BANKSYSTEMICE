@@ -13,4 +13,6 @@ module com.example.banksystemice {
 
     opens com.bankapp to javafx.fxml;
     exports com.bankapp;
+    exports com.javaFX;
+    opens com.javaFX to javafx.fxml;
 }
