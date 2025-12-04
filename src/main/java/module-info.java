@@ -10,6 +10,7 @@ module com.example.banksystemice {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens com.bankapp to javafx.fxml;
     exports com.bankapp;

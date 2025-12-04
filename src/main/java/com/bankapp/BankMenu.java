@@ -1,8 +1,12 @@
 package com.bankapp;
 
+import java.util.Scanner;
+
 public class BankMenu {
     static void main() {
 
+
+        Scanner scanner = new Scanner(System.in);
 
         // Midlertidig menuu:
 
@@ -13,6 +17,11 @@ public class BankMenu {
 
         System.out.println("Press ***Button*** to continue:");
         System.out.println("*** Mobile Bank ***");
+
+
+
+
+
 
     }
 }
