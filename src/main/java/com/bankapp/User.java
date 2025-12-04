@@ -6,15 +6,17 @@ public class User {
     private int userID;
     private String foreName;
     private String surName;
+    private String userName;
     private int password;
     private String email;
     private String phoneNumber;
     private List<Account> accounts;
 
-    public User(int userID, String foreName, String surName, int password, String email, String phoneNumber) {
+    public User(int userID, String foreName, String surName, String userName, int password, String email, String phoneNumber) {
         this.userID = userID;
         this.foreName = foreName;
         this.surName = surName;
+        this.userName = userName;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -42,6 +44,14 @@ public class User {
 
     public void setSurName(String surName) {
         this.surName = surName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getPassword() {
