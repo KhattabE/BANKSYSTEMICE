@@ -1,4 +1,4 @@
-package com.example.banksystemice;
+package com.bankapp;
 
 import javafx.application.Application;
 

@@ -11,6 +11,6 @@ module com.example.banksystemice {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.banksystemice to javafx.fxml;
-    exports com.example.banksystemice;
+    opens com.bankapp to javafx.fxml;
+    exports com.bankapp;
 }
