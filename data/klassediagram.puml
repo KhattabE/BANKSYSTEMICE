@@ -1,0 +1,115 @@
+@startuml
+skinparam classAttributeIconSize 0
+title MobilBank AMEK UML
+
+' -------- MAIN --------
+class Main {
+    + main(args : String[]) : void
+}
+Main --> BankMenu
+
+
+' -------- BANKMENU --------
+class BankMenu {
+    - ui : UIText
+    - db : DBconnection
+    - loggedInUser : User
+
+    + start() : void
+    + login() : void
+    + logout() : void
+    + showMainMenu() : void
+    + handleDeposit() : void
+    + handleWithdraw() : void
+    + showBalance() : void
+    + showTransactions() : void
+}
+
+
+' -------- DOMAIN --------
+class User {
+    - userId : int
+    - fullName : String
+    - username : String
+    - password : String
+
+    + checkPassword(pw : String) : boolean
+}
+
+class Account {
+    - accountId : int
+    - owner : User
+    - balance : double
+
+    + deposit(amount : double) : void
+    + withdraw(amount : double) : boolean
+    + getBalance() : double
+    + canAfford(amount : double) : boolean
+}
+
+class Transactions {
+    - id : int
+    - date : LocalDateTime
+    - type : String
+    - amount : double
+    - fromAccount : Account
+    - toAccount : Account
+
+    + getSummary() : String
+}
+
+
+' -------- SERVICES --------
+class Deposit {
+    + depositAmount(account : Account, amount : double) : void
+    + createDepositTransaction(account : Account, amount : double) : Transactions
+    + validateAmount(amount : double) : boolean
+}
+
+class Withdraw {
+    + withdrawAmount(account : Account, amount : double) : boolean
+    + createWithdrawTransaction(account : Account, amount : double) : Transactions
+    + validateWithdrawal(account : Account, amount : double) : boolean
+}
+
+class Saldo {
+    + getBalance(account : Account) : double
+    + printBalance(account : Account, ui : UIText) : void
+    + formatBalance(value : double) : String
+}
+
+
+' -------- UTIL --------
+package UTIL {
+class DBconnection {
+    + connect(url : String) : void
+    + login(username : String, password : String) : User
+    + loadAccounts(user : User) : List<Account>
+    + loadTransactions(account : Account) : List<Transactions>
+    + saveTransaction(t : Transactions) : void
+    + saveAccount(acc : Account) : void
+}
+
+class UIText {
+    + displayMsg(msg : String) : void
+    + displayError(msg : String) : void
+    + promptTxt(prompt : String) : String
+    + promptNumeric(prompt : String) : double
+    + displayMenu(title : String, options : List<String>) : int
+}
+}
+
+
+' -------- RELATIONER --------
+BankMenu --> User
+User --> Account
+Account --> Transactions
+
+BankMenu --> Deposit
+BankMenu --> Withdraw
+BankMenu --> Saldo
+
+BankMenu --> DBconnection
+BankMenu --> UIText
+
+@enduml
