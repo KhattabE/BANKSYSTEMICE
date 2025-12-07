@@ -1,5 +1,8 @@
 @startuml
-skinparam classAttributeIconSize 0
+
+
+
+skinparam classAttributeIconSize 12
 title MobilBank AMEK UML 1
 
 ' -------- MAIN --------
@@ -11,7 +14,7 @@ Main --> BankMenu
 
 ' -------- BANKMENU --------
 class BankMenu {
-    - ui : UIText
+    public ui : UIText
     - db : DBconnection
     - loggedInUser : User
 
