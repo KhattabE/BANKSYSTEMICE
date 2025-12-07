@@ -2,14 +2,12 @@
 skinparam classAttributeIconSize 0
 title MobilBank AMEK UML 1
 
-' -------- MAIN --------
+' ---------- MAIN ----------
 class Main {
     + main(args : String[]) : void
 }
-Main --> BankMenu
 
-
-' -------- BANKMENU --------
+' ---------- BANKMENU ----------
 class BankMenu {
     - ui : UIText
     - db : DBconnection
@@ -25,8 +23,7 @@ class BankMenu {
     + showTransactions() : void
 }
 
-
-' -------- DOMAIN --------
+' ---------- DOMAIN ----------
 class User {
     - userId : int
     - fullName : String
@@ -58,8 +55,7 @@ class Transactions {
     + getSummary() : String
 }
 
-
-' -------- SERVICES --------
+' ---------- SERVICES ----------
 class Deposit {
     + depositAmount(account : Account, amount : double) : void
     + createDepositTransaction(account : Account, amount : double) : Transactions
@@ -78,38 +74,39 @@ class Saldo {
     + formatBalance(value : double) : String
 }
 
-
-' -------- UTIL --------
+' ---------- UTIL ----------
 package UTIL {
-class DBconnection {
-    + connect(url : String) : void
-    + login(username : String, password : String) : User
-    + loadAccounts(user : User) : List<Account>
-    + loadTransactions(account : Account) : List<Transactions>
-    + saveTransaction(t : Transactions) : void
-    + saveAccount(acc : Account) : void
+    class DBconnection {
+        + connect(url : String) : void
+        + login(username : String, password : String) : User
+        + loadAccounts(user : User) : java.util.List<Account>
+        + loadTransactions(account : Account) : java.util.List<Transactions>
+        + saveTransaction(t : Transactions) : void
+        + saveAccount(acc : Account) : void
+    }
+
+    class UIText {
+        + displayMsg(msg : String) : void
+        + displayError(msg : String) : void
+        + promptTxt(prompt : String) : String
+        + promptNumeric(prompt : String) : double
+        + displayMenu(title : String, options : java.util.List<String>) : int
+    }
 }
 
-class UIText {
-    + displayMsg(msg : String) : void
-    + displayError(msg : String) : void
-    + promptTxt(prompt : String) : String
-    + promptNumeric(prompt : String) : double
-    + displayMenu(title : String, options : List<String>) : int
-}
-}
+' ---------- RELATIONER ----------
+Main o-- BankMenu
 
+BankMenu o-- User
+User o-- Account
+Account o-- Transactions
 
-' -------- RELATIONER --------
-BankMenu --> User
-User --> Account
-Account --> Transactions
+BankMenu o-- Deposit
+BankMenu o-- Withdraw
+BankMenu o-- Saldo
 
-BankMenu --> Deposit
-BankMenu --> Withdraw
-BankMenu --> Saldo
-
-BankMenu --> DBconnection
-BankMenu --> UIText
+' UTIL beholder normal dependency
+BankMenu o-- DBconnection
+BankMenu o-- UIText
 
 @enduml
