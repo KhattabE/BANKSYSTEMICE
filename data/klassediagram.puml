@@ -12,14 +12,15 @@ class Main {
 
 ' ---------- BANKMENU ----------
 class BankMenu {
-    public UIText ui
+    + UIText ui
     - DBconnection db
     - User loggedInUser
-
+    - Arraylist menuOptions
     + void start()
     + void login()
     + void logout()
     + void showMainMenu()
+    + void chooseFromMenu()
     + void handleDeposit()
     + void handleWithdraw()
     + void showBalance()

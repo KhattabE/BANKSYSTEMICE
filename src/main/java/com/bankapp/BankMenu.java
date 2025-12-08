@@ -3,25 +3,32 @@ package com.bankapp;
 import java.util.Scanner;
 
 public class BankMenu {
-    static void main() {
 
 
-        Scanner scanner = new Scanner(System.in);
-
-        // Midlertidig menuu:
-
-        System.out.println("Welcome to AEMK mobileBank\n" +
-                "AEMK is a digital netbank where you can\n" +
-                "transfer money, create account, deposit money, move fund\n" +
-                "and even withdraw from you own phone!!! cool right? yeah musa la zing a zong musade\n");
-
-        System.out.println("Press ***Button*** to continue:\n");
-        System.out.println("*** Mobile Bank ***");
+    public UIText ui;
 
 
 
 
-
+    //Method to start the menu
+    public void start(){
 
     }
+
+
+    //Method to login
+    public void login(){
+
+    }
+
+
+    //Method to logout
+    public void logout(){
+
+    }
+
+
+    //Method to showMainMenu()
+
+
 }
