@@ -1,8 +1,8 @@
 @startuml
 
-
-
 skinparam classAttributeIconSize 12
+
+
 title MobilBank AMEK UML 1
 
 ' ---------- MAIN ----------
@@ -12,88 +12,88 @@ class Main {
 
 ' ---------- BANKMENU ----------
 class BankMenu {
-    public ui : UIText
-    - db : DBconnection
-    - loggedInUser : User
+    public UIText ui
+    - DBconnection db
+    - User loggedInUser
 
-    + start() : void
-    + login() : void
-    + logout() : void
-    + showMainMenu() : void
-    + handleDeposit() : void
-    + handleWithdraw() : void
-    + showBalance() : void
-    + showTransactions() : void
+    + void start()
+    + void login()
+    + void logout()
+    + void showMainMenu()
+    + void handleDeposit()
+    + void handleWithdraw()
+    + void showBalance()
+    + void showTransactions()
 }
 
 ' ---------- DOMAIN ----------
 class User {
-    - userId : int
-    - fullName : String
-    - username : String
-    - password : String
+    - int userId
+    - String fullName
+    - String username
+    - String password
 
-    + checkPassword(pw : String) : boolean
+    + boolean checkPassword(String pw)
 }
 
 class Account {
-    - accountId : int
-    - owner : User
-    - balance : double
+    - int accountId
+    - User owner
+    - double balance
 
-    + deposit(amount : double) : void
-    + withdraw(amount : double) : boolean
-    + getBalance() : double
-    + canAfford(amount : double) : boolean
+    + void deposit(double amount)
+    + boolean withdraw(double amount)
+    + double getBalance()
+    + boolean canAfford(double amount)
 }
 
 class Transactions {
-    - id : int
-    - date : LocalDateTime
-    - type : String
-    - amount : double
-    - fromAccount : Account
-    - toAccount : Account
+    - int id
+    - LocalDateTime date
+    - String type
+    - double amount
+    - Account fromAccount
+    - Account toAccount
 
-    + getSummary() : String
+    + String getSummary()
 }
 
 ' ---------- SERVICES ----------
 class Deposit {
-    + depositAmount(account : Account, amount : double) : void
-    + createDepositTransaction(account : Account, amount : double) : Transactions
-    + validateAmount(amount : double) : boolean
+    + void depositAmount(Account account, double amount)
+    + Transactions createDepositTransaction(Account account, double amount)
+    + boolean validateAmount(double amount)
 }
 
 class Withdraw {
-    + withdrawAmount(account : Account, amount : double) : boolean
-    + createWithdrawTransaction(account : Account, amount : double) : Transactions
-    + validateWithdrawal(account : Account, amount : double) : boolean
+    + boolean withdrawAmount(Account account, double amount)
+    + Transactions createWithdrawTransaction(Account account, double amount)
+    + boolean validateWithdrawal(Account account, double amount)
 }
 
 class Saldo {
-    + getBalance(account : Account) : double
-    + printBalance(account : Account, ui : UIText) : void
-    + formatBalance(value : double) : String
+    + double getBalance(Account account)
+    + void printBalance(Account account, UIText ui)
+    + String formatBalance(double value)
 }
 
 ' ---------- UTIL ----------
 package UTIL {
     class DBconnection {
-        + connect(url : String) : void
-        + login(username : String, password : String) : User
-        + loadAccounts(user : User) : java.util.List<Account>
-        + loadTransactions(account : Account) : java.util.List<Transactions>
-        + saveTransaction(t : Transactions) : void
-        + saveAccount(acc : Account) : void
+        + void connect(String url)
+        + User login(String username, String password)
+        + java.util.List<Account> loadAccounts(User user)
+        + java.util.List<Transactions> loadTransactions(Account account)
+        + void saveTransaction(Transactions t)
+        + void saveAccount(Account acc)
     }
 
     class UIText {
-        + displayMsg(msg : String) : void
-        + displayError(msg : String) : void
-        + promptTxt(prompt : String) : String
-        + promptNumeric(prompt : String) : double
-        + displayMenu(title : String, options : java.util.List<String>) : int
+        + void displayMsg(String msg)
+        + void displayError(String msg)
+        + String promptTxt(String prompt)
+        + double promptNumeric(String prompt)
+        + int displayMenu(String title, java.util.List<String> options)
     }
 }
 
@@ -108,7 +108,6 @@ BankMenu o-- Deposit
 BankMenu o-- Withdraw
 BankMenu o-- Saldo
 
-' UTIL beholder normal dependency
 BankMenu o-- DBconnection
 BankMenu o-- UIText
 
