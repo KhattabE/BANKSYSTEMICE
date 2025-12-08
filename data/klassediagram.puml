@@ -13,8 +13,8 @@ class Main {
 ' ---------- BANKMENU ----------
 class BankMenu {
     + UIText ui
-    - DBconnection db
-    - User loggedInUser
+    + DBconnection db
+    + User loggedInUser
     - Arraylist menuOptions
     + void start()
     + void login()
