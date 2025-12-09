@@ -2,22 +2,13 @@ package com.bankapp;
 
 public class Withdraw {
 
-    public boolean withdrawAmount(Account account, double amount){
-        return true; //Vi skal tilføje noget her, men har bare lagt en placeholder for nu
+    // Attempts to withdraw money using the Account class
+    public boolean withdrawAmount(Account account, double amount) {
+        return account.withdraw(amount);
     }
 
-
-
-    /*Vi skal tilføje noget her, men har bare commentert det ud for nu
-    public Transactions createWithdrawTransaction(Account account, double amount){
-
+    // Creates a withdrawal transaction after a successful withdraw
+    public Transactions createWithdrawTransaction(Account account, double amount) {
+        return new Transactions("WITHDRAW", amount, account, null);
     }
-    */
-
-    public boolean validateWithdrawal(Account account, double amount){
-        return true; //Vi skal tilføje noget her, men har bare lagt en placeholder for nu
-
-    }
-
-
 }

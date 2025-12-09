@@ -2,23 +2,17 @@ package com.bankapp;
 
 public class Deposit {
 
+    // Attempts to deposit money into the account
+    public void depositAmount(Account account, double amount) {
+        account.deposit(amount);
+    }
 
-
-    public void depositAmount(Account account, double amount){
-
+    // Creates a deposit transaction after money has been added
+    public Transactions createDepositTransaction(Account account, double amount) {
+        return new Transactions("DEPOSIT", amount, null, account);
     }
 
 
-    /*Vi skal tilføje noget her, men har bare commentert det ud for nu
-    public Transactions createDepositTransaction(Account account, double amount){
-
-    }
-    */
-
-
-    public boolean validateAmount(double amount){
-        return true; //Vi skal tilføje noget her, men har bare lagt en placeholder for nu
-    }
 
 
 }

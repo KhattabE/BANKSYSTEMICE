@@ -12,6 +12,16 @@ public class Transactions {
     private Account toAccount;
 
 
+    // Constructor
+    public Transactions(String type, double amount, Account fromAccount, Account toAccount) {
+        this.type = type;
+        this.amount = amount;
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
+        this.localDateTime = new Date(); // Time of transaction
+    }
+
+
     //Getter methods
     public int getTransactionID() {
         return transactionID;
