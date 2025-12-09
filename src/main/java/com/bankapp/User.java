@@ -4,21 +4,22 @@ import java.util.List;
 
 public class User {
 
+
     //Class fields
     private int userID;
     private String userName;
-    private String FirstName;
+    private String firstName;
     private String lastName;
     private String userEmail;
-    private int password;
+    private String password;
     private String phoneNumber;
     private List<Account> accounts;
 
 
     //Class constructor
-    public User(int userID, String userName, String FirstName, String lastName, String userEmail, int password, String phoneNumber) {
+    public User(int userID, String userName, String firstName, String lastName, String userEmail, String password, String phoneNumber) {
         this.userID = userID;
-        this.FirstName = FirstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
@@ -38,7 +39,7 @@ public class User {
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public String getLastName() {
@@ -49,7 +50,7 @@ public class User {
         return userEmail;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -62,11 +63,6 @@ public class User {
     }
 
 
-
-    //Method to check password
-    public boolean checkPassword(String password){
-
-    }
 
 
 
