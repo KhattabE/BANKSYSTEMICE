@@ -63,6 +63,12 @@ public class User {
     }
 
 
+    //Method to check if the password is correct
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
+    }
+
+
 
 
 
