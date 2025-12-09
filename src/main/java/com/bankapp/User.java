@@ -7,7 +7,7 @@ public class User {
     //Class fields
     private int userID;
     private String userName;
-    private String foreName;
+    private String FirstName;
     private String lastName;
     private String userEmail;
     private int password;
@@ -16,9 +16,9 @@ public class User {
 
 
     //Class constructor
-    public User(int userID, String userName, String foreName, String lastName, String userEmail, int password, String phoneNumber) {
+    public User(int userID, String userName, String FirstName, String lastName, String userEmail, int password, String phoneNumber) {
         this.userID = userID;
-        this.foreName = foreName;
+        this.FirstName = FirstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
@@ -37,8 +37,8 @@ public class User {
         return userName;
     }
 
-    public String getForeName() {
-        return foreName;
+    public String getFirstName() {
+        return FirstName;
     }
 
     public String getLastName() {
