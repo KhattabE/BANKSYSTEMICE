@@ -1,5 +1,6 @@
 package com.bankapp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -25,6 +26,7 @@ public class User {
         this.password = password;
         this.userEmail = userEmail;
         this.phoneNumber = phoneNumber;
+        this.accounts = new ArrayList<>();
     }
 
 
@@ -68,7 +70,10 @@ public class User {
         return this.password.equals(password);
     }
 
-
+    //Method to add account to user
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
 
 
 

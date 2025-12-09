@@ -30,22 +30,31 @@ class BankMenu {
 ' ---------- DOMAIN ----------
 class User {
     - int userId
-    - String fullName
     - String username
+    - String firstName
+    - String lastName
+    - String userEmail
     - String password
-
-    + boolean checkPassword(String pw)
+    - List<Account> accounts
+    + boolean checkPassword(String password)
+    + void addAccount(Account account)
 }
 
 class Account {
     - int accountId
-    - User owner
     - double balance
+    - String accountType
+    - User owner
+    - List<Transactions> transactions
 
+
+    + double getBalance()
+    + List<Transactions> getTransactions()
     + void deposit(double amount)
     + boolean withdraw(double amount)
-    + double getBalance()
     + boolean canAfford(double amount)
+    + void addTransaction(Transactions t)
+    + void printTransactions()
 }
 
 class Transactions {
@@ -81,12 +90,9 @@ class Saldo {
 ' ---------- UTIL ----------
 package UTIL {
     class DBconnection {
-        + void connect(String url)
-        + User login(String username, String password)
-        + java.util.List<Account> loadAccounts(User user)
-        + java.util.List<Transactions> loadTransactions(Account account)
-        + void saveTransaction(Transactions t)
-        + void saveAccount(Account acc)
+        +void createBankAccountInformation(User user)
+        +void userInformation()
+        +userLoginInformation()
     }
 
     class UIText {
