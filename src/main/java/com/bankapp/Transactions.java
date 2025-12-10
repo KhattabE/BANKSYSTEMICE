@@ -48,9 +48,15 @@ public class Transactions {
     }
 
 
-   public String getSummary() {
-        return ""; //Vi skal tilføje noget her, men har bare lagt en placeholder for nu
-   }
+    public String getSummary() {
+        return "Type: " + type +
+                ", Amount: " + amount +
+                ", From: " + fromAccount +
+                ", To: " + toAccount +
+                ", Date: " + localDateTime;
+    }
+
+
 
 
 
