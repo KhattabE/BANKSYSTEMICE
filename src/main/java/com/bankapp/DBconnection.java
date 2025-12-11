@@ -13,8 +13,12 @@ public class DBconnection {
         try{
             //The driver manager is what creates the Connection for us
             connection = DriverManager.getConnection(dataURL);
+            System.out.println("✓ Database connection successful!");
+            System.out.println("Connected to: " + dataURL);
         }catch (SQLException sqle){
-            System.out.println("An error has occurred, we could not connect to the database!");
+            System.out.println("✗ ERROR: Could not connect to the database!");
+            System.out.println("Database URL: " + dataURL);
+            sqle.printStackTrace(); // This will show us the actual error
         }
     }
 
@@ -46,6 +50,7 @@ public class DBconnection {
 
         } catch (SQLException sqle) {
             System.out.println("Data could not be inserted into the database");
+            sqle.printStackTrace(); // Show the actual error
         }
     }
 
@@ -82,6 +87,7 @@ public class DBconnection {
 
         } catch (SQLException sqle) {
             System.out.println("Could not retrieve the data!");
+            sqle.printStackTrace();
         }
     }
 
@@ -91,37 +97,32 @@ public class DBconnection {
 
 
     //Method to get the user login information from the database
-    public void userLoginInformation() {
-        String sql = "SELECT user_name, user_password FROM bankUser";
+    public User loginUser(String username, String password) {
+        String sql = "SELECT * FROM bankUser WHERE user_name = ? AND user_password = ?";
 
         try {
-            Statement stmt = connection.createStatement();
-            ResultSet set = stmt.executeQuery(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
 
-            while (set.next()) {
-                String userName = set.getString("user_name");
-                String userPassword = set.getString("user_password");
+            ResultSet rset = pstmt.executeQuery();
 
-                System.out.println(userName + " - " + userPassword);
+            if (rset.next()) {
+                return new User(
+                        rset.getInt("user_id"),
+                        rset.getString("user_name"),
+                        rset.getString("first_name"),
+                        rset.getString("last_name"),
+                        rset.getString("user_mail"),
+                        rset.getString("user_password"),
+                        rset.getString("user_phoneNum")
+                );
             }
 
-        } catch (SQLException sqle) {
-            System.out.println("Could not retrieve the data!");
+        } catch (SQLException e) {
+            System.out.println("Login query failed");
+            e.printStackTrace();
         }
+        return null; // if login fails
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
