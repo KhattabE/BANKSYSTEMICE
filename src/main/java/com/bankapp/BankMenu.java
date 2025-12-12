@@ -28,23 +28,21 @@ public class BankMenu {
         ui.displayMsg("\n*** Welcome to AEMK Mobile Bank ***\n");
 
 
-            ui.displayMsg("Start menu");
-            ui.displayMsg("1. Log-in");
-            ui.displayMsg("2. Create account");
-            ui.displayMsg("0. Exit");
+        ui.displayMsg("Start menu");
+        ui.displayMsg("1. Log-in");
+        ui.displayMsg("2. Create account");
+        ui.displayMsg("0. Exit");
 
-            int choice = ui.promptNumericInt("Choose an option:");
+        int choice = ui.promptNumericInt("Choose an option:");
 
-            switch (choice) {
-                case 1 -> login();
-                case 2 -> createAccount();
-                case 0 -> System.exit(0);
-                default -> ui.displayMsg("Invalid choice, please try again.");
-            }
+        switch (choice) {
+            case 1 -> login();
+            case 2 -> createAccount();
+            case 0 -> System.exit(0);
+            default -> ui.displayMsg("Invalid choice, please try again.");
+        }
 
     }
-
-
 
 
     // Create account
@@ -69,7 +67,7 @@ public class BankMenu {
 
         String password = ui.promptTxt("Enter your password");
         while (password.length() < 5)
-            password = ui.promptTxt("Try again! The password must be at least 4 characters!");
+            password = ui.promptTxt("Try again! The password must be at least 5 characters!");
 
         String phoneNumber = ui.promptTxt("Enter your phone number");
         while (!phoneNumber.matches("\\d{8,}"))
@@ -87,10 +85,6 @@ public class BankMenu {
     }
 
 
-
-
-
-
     // Login
     public void login() {
         ui.displayMsg("\n*** Login ***\n");
@@ -103,7 +97,7 @@ public class BankMenu {
             loggedInUser = db.loginUser(username, password);
 
             if (loggedInUser != null) {
-                ui.displayMsg("Login successful! Welcome back " + loggedInUser.getUserName());
+                ui.displayMsg("Login successful! Welcome back " + loggedInUser.getUserName() + "\n");
                 chooseFromMenu();
                 //Return will exit the while loop, since the conditions are met
                 return;
@@ -111,12 +105,15 @@ public class BankMenu {
 
             //Here we give the user an option togo back, since the user might have pressed log in, but did not have log in yet,
             // and this is needed, so we dont get the user stuck in an endless while loop
+
             ui.displayError("Invalid username or password.");
+
+            ui.displayMsg("\nChoose an option:");
 
             ui.displayMsg("1. Try again");
             ui.displayMsg("0. Back to start menu");
 
-            int choice = ui.promptNumericInt("Choose an option:");
+            int choice = ui.promptNumericInt("");
 
             if (choice == 0) {
                 start();
@@ -124,11 +121,6 @@ public class BankMenu {
             // Else the loop will countinue
         }
     }
-
-
-
-
-
 
 
     // Mail validation
@@ -141,13 +133,8 @@ public class BankMenu {
     }
 
 
-
-
-
-
-
     //Method where we create the showMainMenu() options
-    public void showMainMenu(){
+    public void showMainMenu() {
         ui.displayMsg("Bank Menu Options: ");
 
         mainMenuOptions = new ArrayList<>();
@@ -158,7 +145,7 @@ public class BankMenu {
                 3: Show Transactions
                 4: Deposit
                 5: Withdraw 
-                6: //Hvis der skal tilføjes flere ting, så husk at tilføje dem også til chooseFromMenu() Metoden
+                6: Create bank account
                 7: //Hvis der skal tilføjes flere ting, så husk at tilføje dem også til chooseFromMenu() Metoden
                 8: Log-out  
                 """);
@@ -170,7 +157,7 @@ public class BankMenu {
     public void chooseFromMenu() {
         boolean isLoggedIn = true;
 
-        while ( isLoggedIn) {
+        while (isLoggedIn) {
             showMainMenu();
 
             int menuChoice = ui.promptNumericInt("Choose an option:");
@@ -181,6 +168,7 @@ public class BankMenu {
                 case 3 -> showTransactions();
                 case 4 -> deposit();
                 case 5 -> withdraw();
+                case 6 -> bankAccount();
                 case 8 -> {
                     logout();
                     isLoggedIn = false;
@@ -191,19 +179,113 @@ public class BankMenu {
     }
 
 
-
-    //Method to show account Information
-    public void viewAccountInfo(){
-        if (loggedInUser != null) {
-            db.userInformation(loggedInUser.getUserID());
-        } else {
+    // Method to show account Information
+    public void viewAccountInfo() {
+        if (loggedInUser == null) {
             ui.displayError("No user is logged in!");
+            return;
+        }
+
+        db.userInformation(loggedInUser.getUserID());
+
+
+        // Method to make the user have a choice to exit
+        while (true) {
+            int choice = ui.promptNumericInt("0. Exit");
+
+            if (choice == 0) {
+                ui.displayMsg("Exiting...");
+                ui.displayMsg("Back to menu options:");
+                return;
+            } else {
+                ui.displayError("Invalid input, try again.");
+            }
         }
     }
 
 
+    //Method to show the balance the bank customer has
+    public void showBalance() {
+        if (loggedInUser == null) {
+            ui.displayError("No user is logged in!");
+            return;
+        }
+
+        db.userShowBalance(loggedInUser.getUserID());
+
+        // Method to make the user have a choice to exit
+        while (true) {
+            int choice = ui.promptNumericInt("0. Exit");
+
+            if (choice == 0) {
+                ui.displayMsg("Exiting...");
+                ui.displayMsg("Back to menu options:");
+                return;
+            } else {
+                ui.displayError("Invalid input, try again.");
+            }
+
+        }
+    }
+
+    //
+    public void showTransactions() {
+
+    }
+
+    //
+    public void deposit() {
+
+    }
+
+    //
+    public void withdraw() {
+
+    }
+
+    public void bankAccount() {
+        if (loggedInUser == null) {
+            ui.displayError("No user is logged in!");
+            return;
+        }
+
+        // MUSA LAV HERFRA ---------
+        ui.displayMsg("*** Create a new bank account ***");
+        // Brugeren skal kunne skrive et navn til kontoen (fx "Savings")
+        // Tilføj String accountName = ui.promptTxt("Enter name for your new bank account");
+
+        // Ændr DB-metoden createBalanceAccount til også at tage accountName som parameter
+        // og gem kontonavnet i databasen sammen med userId og startbalance
+
+        db.createBalanceAccount(loggedInUser.getUserID());
+
+        // Når kontoen er oprettet, skal beskeden vise kontonavnet og bekræfte oprettelsen
+        // fx ui.displayMsg("New bank account '" + accountName + "' created successfully");
+
+        ui.displayMsg("New bank account created successfully for " + loggedInUser.getUserName());
+        ui.displayMsg("Starting balance: 0.0 kr.");
+
+        //  Tilføj mulighed for at vise kontonavne i showBalance()
+        // TIL HER TIL ----------
 
 
+
+        // Ik rør denne del::::
+        // Method to make the user have a choice to exit
+        while (true) {
+            int choice = ui.promptNumericInt("0. Exit");
+
+            if (choice == 0) {
+                ui.displayMsg("Exiting...");
+                ui.displayMsg("Back to menu options:");
+                return;
+            } else {
+                ui.displayError("Invalid input, try again.");
+            }
+
+        }
+
+    }
 
     //Method to logout
     public void logout() {
@@ -219,49 +301,22 @@ public class BankMenu {
                 """);
 
         //If user chooses 1, then he will get back to the start menu
-        if (logoutUserChoice == 1){
+        if (logoutUserChoice == 1) {
             start();
-        } else if(logoutUserChoice == 2){
+        } else if (logoutUserChoice == 2) {
             System.exit(0);
         } else {
-            while (logoutUserChoice != 1 && logoutUserChoice != 2){
+            while (logoutUserChoice != 1 && logoutUserChoice != 2) {
                 logoutUserChoice = ui.promptNumericInt("""
-                "You can only choose 1 or 2, try again: "
-                1: Start menu: 
-                2: Exist completely: 
-                """);
+                        "You can only choose 1 or 2, try again: "
+                        1: Start menu: 
+                        2: Exist completely: 
+                        """);
             }
 
         }
 
     }
-
-
-
-
-
-    //Method to show the balance the bank customer has
-    public void showBalance(){
-
-    }
-
-
-
-
-    //
-    public void deposit(){
-
-    }
-
-    //
-    public void withdraw(){
-
-    }
-
-    //
-    public void showTransactions(){
-
-    }
-
 }
+
 

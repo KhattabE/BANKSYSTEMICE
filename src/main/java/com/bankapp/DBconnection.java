@@ -9,21 +9,18 @@ public class DBconnection {
 
 
     //Method to be able to connect to the database
-    public void connect(String dataURL){
-        try{
+    public void connect(String dataURL) {
+        try {
             //The driver manager is what creates the Connection for us
             connection = DriverManager.getConnection(dataURL);
             System.out.println("Database connection successful!");
             System.out.println("Connected to: " + dataURL);
-        }catch (SQLException sqle){
+        } catch (SQLException sqle) {
             System.out.println(" ERROR: Could not connect to the database!");
             System.out.println("Database URL: " + dataURL);
             sqle.printStackTrace(); // This will show us the actual error
         }
     }
-
-
-
 
 
     //Method to insert the information about the user when they create an account
@@ -59,10 +56,10 @@ public class DBconnection {
     //Method to get the userInformation for a specific user
     public void userInformation(int userId) {
         String sql = """
-        SELECT user_id, user_name, first_name, last_name, user_mail, user_password, user_phoneNum 
-        FROM bankUser
-        WHERE user_id = ?
-        """;
+                SELECT user_id, user_name, first_name, last_name, user_mail, user_password, user_phoneNum 
+                FROM bankUser
+                WHERE user_id = ?
+                """;
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -98,8 +95,42 @@ public class DBconnection {
     }
 
 
+    public void userShowBalance(int userId) {
+        String sql = """
+        SELECT balance_id, balance 
+        FROM userBalance
+        WHERE bankuser_id = ?
+        """;
+        try {
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+
+            ResultSet set = pstmt.executeQuery();
+
+            System.out.println("*** All accounts and balance: ***\n");
+            boolean hasAccounts = false;
+
+            while(set.next()){
+            int balance_id = set.getInt("balaance_id");
+            double balance = set.getDouble("balance");
+
+                System.out.println("Account ID name: " + balance_id);
+                System.out.println("Balance: " + balance + " kr");
+            }
 
 
+            if (!hasAccounts){
+                System.out.println("No balance has been found on this user");
+                System.out.println("Create an account to view balance\n");
+            }
+
+
+        } catch (SQLException sqle) {
+            System.out.println("Could not retrieve the data!");
+            sqle.printStackTrace();
+        }
+    }
 
 
     //Method to get the user login information from the database
@@ -197,9 +228,9 @@ public class DBconnection {
     // Add a transaction record
     public void addTransaction(int balanceId, double withdraw, double deposit, double transfer) {
         String sql = """
-            INSERT INTO transactions(withdraw_transaction, deposit_transaction, transfer_transaction, transaction_balance_id)
-            VALUES (?, ?, ?, ?)
-            """;
+                INSERT INTO transactions(withdraw_transaction, deposit_transaction, transfer_transaction, transaction_balance_id)
+                VALUES (?, ?, ?, ?)
+                """;
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -243,13 +274,13 @@ public class DBconnection {
     // Get transaction history for a user
     public void getTransactionHistory(int userId) {
         String sql = """
-            SELECT t.transactions_id, t.withdraw_transaction, t.deposit_transaction, 
-                   t.transfer_transaction, t.transaction_balance_id
-            FROM transactions t
-            JOIN userBalance ub ON t.transaction_balance_id = ub.balance_id
-            WHERE ub.bankuser_id = ?
-            ORDER BY t.transactions_id DESC
-            """;
+                SELECT t.transactions_id, t.withdraw_transaction, t.deposit_transaction, 
+                       t.transfer_transaction, t.transaction_balance_id
+                FROM transactions t
+                JOIN userBalance ub ON t.transaction_balance_id = ub.balance_id
+                WHERE ub.bankuser_id = ?
+                ORDER BY t.transactions_id DESC
+                """;
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
