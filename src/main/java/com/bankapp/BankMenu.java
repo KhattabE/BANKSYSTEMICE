@@ -207,6 +207,7 @@ public class BankMenu {
         loggedInUser = null;
         ui.displayMsg("Logged out successfully.");
 
+        //Here we give the user an option to either fully exit the system, or go back to the create account/log in menu
         int logoutUserChoice = ui.promptNumericInt("""
                 Would you like to go back to the Start Menu, or exist completely?
                 1: Start menu: 
