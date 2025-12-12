@@ -194,7 +194,6 @@ public class BankMenu {
     //Method to show account Information
     public void viewAccountInfo(){
         db.userInformation();
-
     }
 
 
@@ -220,7 +219,14 @@ public class BankMenu {
         } else if(logoutUserChoice == 2){
             System.exit(0);
         } else {
-            ui.displayMsg("You can only choose 1 or 2, try again: ");
+            while (logoutUserChoice != 1 && logoutUserChoice != 2){
+                logoutUserChoice = ui.promptNumericInt("""
+                "You can only choose 1 or 2, try again: "
+                1: Start menu: 
+                2: Exist completely: 
+                """);
+            }
+
         }
 
     }
