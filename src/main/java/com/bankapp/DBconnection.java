@@ -56,18 +56,21 @@ public class DBconnection {
     }
 
 
-    //Method to get the userInformation if needed
-    public void userInformation() {
+    //Method to get the userInformation for a specific user
+    public void userInformation(int userId) {
         String sql = """
-            SELECT user_id, user_name, first_name, last_name, user_mail, user_password, user_phoneNum 
-            FROM bankUser
-            """;
+        SELECT user_id, user_name, first_name, last_name, user_mail, user_password, user_phoneNum 
+        FROM bankUser
+        WHERE user_id = ?
+        """;
 
         try {
-            Statement stmt = connection.createStatement();
-            ResultSet set = stmt.executeQuery(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, userId);
 
-            while (set.next()) {
+            ResultSet set = pstmt.executeQuery();
+
+            if (set.next()) {
                 int userID = set.getInt("user_id");
                 String userName = set.getString("user_name");
                 String firstName = set.getString("first_name");
@@ -76,14 +79,16 @@ public class DBconnection {
                 String userPassword = set.getString("user_password");
                 String userPhoneNumber = set.getString("user_phoneNum");
 
-                System.out.println("User ID: " + userID +
-                        "\nUser Name: " + userName +
-                        "\nUser First Name: " + firstName +
-                        "\nUser Last Name: " + lastName +
-                        "\nUser Mail: " + userMail +
-                        "\nUser Password: " + userPassword +
-                        "\nUser Phone Number: " + userPhoneNumber +
-                        "\n---------------------------");
+                System.out.println("\n----Your Account Information----");
+                System.out.println("User ID: " + userID);
+                System.out.println("User Name: " + userName);
+                System.out.println("First Name: " + firstName);
+                System.out.println("Last Name: " + lastName);
+                System.out.println("Email: " + userMail);
+                System.out.println("Phone Number: " + userPhoneNumber);
+                System.out.println("------------------------------------\n");
+            } else {
+                System.out.println("User not found!");
             }
 
         } catch (SQLException sqle) {

@@ -156,8 +156,8 @@ public class BankMenu {
                 1: View Account information
                 2: Show Balance
                 3: Show Transactions
-                4: Handle Deposit
-                5: Handle Withdraw 
+                4: Deposit
+                5: Withdraw 
                 6: //Hvis der skal tilføjes flere ting, så husk at tilføje dem også til chooseFromMenu() Metoden
                 7: //Hvis der skal tilføjes flere ting, så husk at tilføje dem også til chooseFromMenu() Metoden
                 8: Log-out  
@@ -179,8 +179,8 @@ public class BankMenu {
                 case 1 -> viewAccountInfo();
                 case 2 -> showBalance();
                 case 3 -> showTransactions();
-                case 4 -> handleDeposit();
-                case 5 -> handleWithdraw();
+                case 4 -> deposit();
+                case 5 -> withdraw();
                 case 8 -> {
                     logout();
                     isLoggedIn = false;
@@ -194,7 +194,11 @@ public class BankMenu {
 
     //Method to show account Information
     public void viewAccountInfo(){
-        db.userInformation();
+        if (loggedInUser != null) {
+            db.userInformation(loggedInUser.getUserID());
+        } else {
+            ui.displayError("No user is logged in!");
+        }
     }
 
 
@@ -244,17 +248,13 @@ public class BankMenu {
 
 
 
-
-
-
-
     //
-    public void handleDeposit(){
+    public void deposit(){
 
     }
 
     //
-    public void handleWithdraw(){
+    public void withdraw(){
 
     }
 
