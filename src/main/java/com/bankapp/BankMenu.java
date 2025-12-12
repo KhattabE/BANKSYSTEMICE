@@ -75,14 +75,15 @@ public class BankMenu {
         while (!phoneNumber.matches("\\d{8,}"))
             phoneNumber = ui.promptTxt("Phone number must be at least 8 digits:");
 
-        // Create user object
-        User newUser = new User(1, username, firstName, lastName, mail, password, phoneNumber);
+        // Create user object, we use 0 for user_id since it will be auto generated
+        User newUser = new User(0, username, firstName, lastName, mail, password, phoneNumber);
 
         // Save user using SAME db connection
         db.createBankAccountInformation(newUser);
 
         ui.displayMsg("Account successfully created for " + newUser.getUserName());
         ui.displayMsg("Welcome to AEMK " + newUser.getFirstName() + "!");
+        start();
     }
 
 
@@ -233,6 +234,20 @@ public class BankMenu {
 
 
 
+
+
+    //Method to show the balance the bank customer has
+    public void showBalance(){
+
+    }
+
+
+
+
+
+
+
+
     //
     public void handleDeposit(){
 
@@ -240,11 +255,6 @@ public class BankMenu {
 
     //
     public void handleWithdraw(){
-
-    }
-
-    //
-    public void showBalance(){
 
     }
 
