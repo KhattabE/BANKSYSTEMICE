@@ -90,23 +90,41 @@ public class BankMenu {
 
 
 
-    // LOGIN
+    // Login
     public void login() {
         ui.displayMsg("\n*** Login ***\n");
 
-        String username = ui.promptTxt("Enter your username:");
-        String password = ui.promptTxt("Enter your password:");
+        //While true loop to keep lopping until the user enters the correct information
+        while (true) {
+            String username = ui.promptTxt("Enter your username:");
+            String password = ui.promptTxt("Enter your password:");
 
-        // USE THE SAME DB INSTANCE
-        loggedInUser = db.loginUser(username, password);
+            loggedInUser = db.loginUser(username, password);
 
-        if (loggedInUser != null) {
-            ui.displayMsg("Login was successful! Welcome back " + loggedInUser.getUserName() + "!");
-            chooseFromMenu();
-        } else {
-            ui.displayError("Invalid username or password! Please try again:");
+            if (loggedInUser != null) {
+                ui.displayMsg("Login successful! Welcome back " + loggedInUser.getUserName());
+                chooseFromMenu();
+                //Return will exit the while loop, since the conditions are met
+                return;
+            }
+
+            //Here we give the user an option togo back, since the user might have pressed log in, but did not have log in yet,
+            // and this is needed, so we dont get the user stuck in an endless while loop
+            ui.displayError("Invalid username or password.");
+
+            ui.displayMsg("1. Try again");
+            ui.displayMsg("0. Back to start menu");
+
+            int choice = ui.promptNumericInt("Choose an option:");
+
+            if (choice == 0) {
+                start();
+            }
+            // Else the loop will countinue
         }
     }
+
+
 
 
 
@@ -148,20 +166,64 @@ public class BankMenu {
     }
 
     //Method where user chooses the option
-    public void chooseFromMenu(){
-        showMainMenu();
+    public void chooseFromMenu() {
+        boolean isLoggedIn = true;
 
-        ui.displayMsg("Choose one of following options: ");
-        int menuChoice = ui.promptNumericInt("Choose an option:");
+        while ( isLoggedIn) {
+            showMainMenu();
+
+            int menuChoice = ui.promptNumericInt("Choose an option:");
+
+            switch (menuChoice) {
+                case 1 -> viewAccountInfo();
+                case 2 -> showBalance();
+                case 3 -> showTransactions();
+                case 4 -> handleDeposit();
+                case 5 -> handleWithdraw();
+                case 8 -> {
+                    logout();
+                    isLoggedIn = false;
+                }
+                default -> ui.displayError("Invalid option");
+            }
+        }
+    }
+
+
+
+    //Method to show account Information
+    public void viewAccountInfo(){
+        db.userInformation();
 
     }
+
+
 
 
 
     //Method to logout
-    public void logout(){
+    public void logout() {
+        //no one is logged in anymore
+        loggedInUser = null;
+        ui.displayMsg("Logged out successfully.");
+
+        int logoutUserChoice = ui.promptNumericInt("""
+                Would you like to go back to the Start Menu, or exist completely?
+                1: Start menu: 
+                2: Exist completely: 
+                """);
+
+        //If user chooses 1, then he will get back to the start menu
+        if (logoutUserChoice == 1){
+            start();
+        } else if(logoutUserChoice == 2){
+            System.exit(0);
+        } else {
+            ui.displayMsg("You can only choose 1 or 2, try again: ");
+        }
 
     }
+
 
 
     //
