@@ -31,7 +31,7 @@ public class UIText {
     }
 
     // Prompts the user for a numeric input (returns a double)
-    public double promptNumeric(String prompt) {
+    public double promptNumericDouble(String prompt) {
         while (true) {
             displayMsg(prompt);
             String input = scanner.nextLine();
@@ -43,4 +43,22 @@ public class UIText {
             }
         }
     }
+
+
+
+    public int promptNumericInt(String prompt) {
+        while (true) {
+            displayMsg(prompt);
+            String input = scanner.nextLine();
+
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                displayError("Invalid number, try again.");
+            }
+        }
+    }
+
+
+
 }

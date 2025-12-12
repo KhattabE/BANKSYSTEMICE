@@ -6,9 +6,16 @@ public class BankMenu {
 
     private UIText ui;
     private User loggedInUser;
-
+    //Arraylist to store the main menu options in them
+    private ArrayList<String> mainMenuOptions;
     // ONE database connection for the entire menu
     private DBconnection db;
+
+
+    //Getter
+    public ArrayList<String> getMainMenuOptions() {
+        return mainMenuOptions;
+    }
 
     // Start Menu
     public void start() {
@@ -20,23 +27,25 @@ public class BankMenu {
 
         ui.displayMsg("\n*** Welcome to AEMK Mobile Bank ***\n");
 
-        boolean isRunning = true;
-        while (isRunning) {
+
             ui.displayMsg("Start menu");
             ui.displayMsg("1. Log-in");
             ui.displayMsg("2. Create account");
             ui.displayMsg("0. Exit");
 
-            int choice = (int) ui.promptNumeric("Choose an option:");
+            int choice = ui.promptNumericInt("Choose an option:");
 
             switch (choice) {
                 case 1 -> login();
                 case 2 -> createAccount();
-                case 0 -> isRunning = false;
+                case 0 -> System.exit(0);
                 default -> ui.displayMsg("Invalid choice, please try again.");
             }
-        }
+
     }
+
+
+
 
     // Create account
     public void createAccount() {
@@ -76,6 +85,11 @@ public class BankMenu {
         ui.displayMsg("Welcome to AEMK " + newUser.getFirstName() + "!");
     }
 
+
+
+
+
+
     // LOGIN
     public void login() {
         ui.displayMsg("\n*** Login ***\n");
@@ -87,12 +101,16 @@ public class BankMenu {
         loggedInUser = db.loginUser(username, password);
 
         if (loggedInUser != null) {
-            ui.displayMsg("Login was successful! Welcome back, " + loggedInUser.getUserName());
-            showMainMenu();
+            ui.displayMsg("Login was successful! Welcome back " + loggedInUser.getUserName() + "!");
+            chooseFromMenu();
         } else {
-            ui.displayError("Invalid username or password. Please try again.");
+            ui.displayError("Invalid username or password! Please try again:");
         }
     }
+
+
+
+
 
     // Mail validation
     public static boolean isValidMail(String mail) {
@@ -104,21 +122,47 @@ public class BankMenu {
     }
 
 
-//Method to logout
-    public void logout(){
 
-    }
+
+
 
 
     //Method where we create the showMainMenu() options
     public void showMainMenu(){
+        ui.displayMsg("Bank Menu Options: ");
+
+        mainMenuOptions = new ArrayList<>();
+
+        mainMenuOptions.add("""
+                1: View Account information
+                2: Show Balance
+                3: Show Transactions
+                4: Handle Deposit
+                5: Handle Withdraw 
+                6: //Hvis der skal tilføjes flere ting, så husk at tilføje dem også til chooseFromMenu() Metoden
+                7: //Hvis der skal tilføjes flere ting, så husk at tilføje dem også til chooseFromMenu() Metoden
+                8: Log-out  
+                """);
+        ui.displayMsg(mainMenuOptions.getFirst());
 
     }
 
     //Method where user chooses the option
     public void chooseFromMenu(){
+        showMainMenu();
+
+        ui.displayMsg("Choose one of following options: ");
+        int menuChoice = ui.promptNumericInt("Choose an option:");
 
     }
+
+
+
+    //Method to logout
+    public void logout(){
+
+    }
+
 
     //
     public void handleDeposit(){
