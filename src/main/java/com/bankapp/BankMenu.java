@@ -402,7 +402,7 @@ public class BankMenu {
         ui.displayMsg("*** Create a new bank account ***");
 
         // Get account name from user
-        String accountName = ui.promptTxt("Enter name for your new bank account (e.g., 'Savings', 'Checking'):");
+        String accountName = ui.promptTxt("Enter name for your new bank account:");
 
         // Validate name is not empty
         while (accountName.trim().isEmpty()) {
