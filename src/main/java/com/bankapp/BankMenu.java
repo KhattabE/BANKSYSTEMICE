@@ -160,7 +160,6 @@ public class BankMenu {
                 4: Deposit
                 5: Withdraw 
                 6: Create bank account
-                7: //Hvis der skal tilføjes flere ting, så husk at tilføje dem også til chooseFromMenu() Metoden
                 8: Log-out  
                 """);
         ui.displayMsg(mainMenuOptions.getFirst());
