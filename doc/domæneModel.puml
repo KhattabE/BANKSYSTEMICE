@@ -1,0 +1,24 @@
+@startuml
+
+skinparam backgroundColor black
+skinparam rectangle {
+    BackgroundColor black
+    BorderColor white
+    FontColor white
+    FontSize 20
+}
+skinparam arrow {
+    Color white
+    FontColor white
+}
+
+rectangle "BankMenu" as BM
+rectangle "User" as U
+rectangle "Account" as A
+rectangle "Transaction" as T
+
+BM -down-> U : Kalder metoder &\nhenter data
+U -down-> A : 1 til mange
+A -right-> T : 1 til mange
+
+@enduml

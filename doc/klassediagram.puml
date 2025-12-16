@@ -12,42 +12,52 @@ class Main {
 
 ' ---------- BANKMENU ----------
 class BankMenu {
-    + UIText ui
-    + DBconnection db
-    + User loggedInUser
-    - Arraylist menuOptions
+    - UIText ui
+    - DBconnection db
+    - User loggedInUser
+    - ArrayList<String> mainMenuOptions
     + void start()
+    + void createAccount()
     + void login()
     + void logout()
     + void showMainMenu()
     + void chooseFromMenu()
-    + void handleDeposit()
-    + void handleWithdraw()
+    + void deposit()
+    + void withdraw()
     + void showBalance()
     + void showTransactions()
+    + void bankAccount()
+    + void viewAccountInfo()
+    + boolean isValidMail(String mail)
 }
 
 ' ---------- DOMAIN ----------
 class User {
-    - int userId
-    - String username
+    - int userID
+    - String userName
     - String firstName
     - String lastName
     - String userEmail
     - String password
-    - List<Account> accounts
+    - String phoneNumber
+    + int getUserID()
+    + String getUserName()
+    + String getFirstName()
+    + String getLastName()
+    + String getUserEmail()
+    + String getPassword()
+    + String getPhoneNumber()
     + boolean checkPassword(String password)
-    + void addAccount(Account account)
 }
 
 class Account {
-    - int accountId
+    - int accountID
     - double balance
     - String accountType
     - User owner
     - List<Transactions> transactions
 
-
+    + int getAccountID()
     + double getBalance()
     + List<Transactions> getTransactions()
     + void deposit(double amount)
@@ -58,8 +68,8 @@ class Account {
 }
 
 class Transactions {
-    - int id
-    - LocalDateTime date
+    - int transactionID
+    - Date localDateTime
     - String type
     - double amount
     - Account fromAccount
@@ -72,13 +82,11 @@ class Transactions {
 class Deposit {
     + void depositAmount(Account account, double amount)
     + Transactions createDepositTransaction(Account account, double amount)
-    + boolean validateAmount(double amount)
 }
 
 class Withdraw {
     + boolean withdrawAmount(Account account, double amount)
     + Transactions createWithdrawTransaction(Account account, double amount)
-    + boolean validateWithdrawal(Account account, double amount)
 }
 
 class Saldo {
@@ -90,17 +98,30 @@ class Saldo {
 ' ---------- UTIL ----------
 package UTIL {
     class DBconnection {
-        +void createBankAccountInformation(User user)
-        +void userInformation()
-        +userLoginInformation()
+        - Connection connection
+        + void connect(String dataURL)
+        + void createBankAccountInformation(User user)
+        + void userInformation(int userId)
+        + User loginUser(String username, String password)
+        + User getUserById(int userId)
+        + void createBalanceAccount(int userId, String accountName)
+        + void userShowBalance(int userId)
+        + Account getAccountById(int accountId)
+        + void saveAccount(Account account)
+        + double getBalanceByAccountId(int accountId)
+        + boolean updateBalanceByAccountId(int accountId, double newBalance)
+        + boolean validateAccountOwnership(int userId, int accountId)
+        + void addTransaction(int balanceId, double withdraw, double deposit, double transfer)
+        + void getTransactionHistory(int userId)
     }
 
     class UIText {
+        - Scanner scanner
         + void displayMsg(String msg)
         + void displayError(String msg)
         + String promptTxt(String prompt)
-        + double promptNumeric(String prompt)
-        + int displayMenu(String title, java.util.List<String> options)
+        + int promptNumericInt(String prompt)
+        + double promptNumericDouble(String prompt)
     }
 }
 
