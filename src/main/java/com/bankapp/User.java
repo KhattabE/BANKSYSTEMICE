@@ -65,16 +65,6 @@ public class User {
     }
 
 
-    //Method to check if the password is correct
-    public boolean checkPassword(String password) {
-        return this.password.equals(password);
-    }
-
-    //Method to add account to user
-    public void addAccount(Account account) {
-        accounts.add(account);
-    }
-
 
 
 

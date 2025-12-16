@@ -25,7 +25,6 @@ public class DBconnection {
 
     // Insert new user information into database
     public void createBankAccountInformation(User user) {
-        // SQL query - user_id is auto-generated
         String sql = """
                 INSERT INTO bankUser(user_name, first_name, last_name, user_mail, user_password, user_phoneNum)
                 VALUES (?,?,?,?,?,?)
@@ -139,7 +138,7 @@ public class DBconnection {
     }
 
 
-    // Verify user login credentials and return User object
+
     public User loginUser(String username, String password) {
         String sql = "SELECT * FROM bankUser WHERE user_name = ? AND user_password = ?";
 
@@ -150,7 +149,7 @@ public class DBconnection {
 
             ResultSet rset = pstmt.executeQuery();
 
-            // If credentials match, create and return User object
+
             if (rset.next()) {
                 return new User(
                         rset.getInt("user_id"),
@@ -167,7 +166,7 @@ public class DBconnection {
             System.out.println("Login query failed");
             e.printStackTrace();
         }
-        return null; // Return null if login fails
+        return null; // will return null if login fails
     }
 
 
