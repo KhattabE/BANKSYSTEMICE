@@ -282,7 +282,7 @@ public class DBconnection {
     public void getTransactionHistory(int userId) {
         String sql = """
                 SELECT t.transactions_id, t.withdraw_transaction, t.deposit_transaction, 
-                       t.transfer_transaction, t.transaction_balance_id
+                t.transfer_transaction, t.transaction_balance_id
                 FROM transactions t
                 JOIN userBalance ub ON t.transaction_balance_id = ub.balance_id
                 WHERE ub.bankuser_id = ?
